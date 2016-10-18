@@ -1,6 +1,7 @@
 package com.but42.criminalintent;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.LayoutRes;
 import android.support.annotation.Nullable;
@@ -34,8 +35,11 @@ public class CrimeListFragment extends ListFragment {
 
     @Override
     public void onListItemClick(ListView l, View v, int position, long id) {
-        Crime c = ((CrimeAdapter)getListAdapter()).getItem(position);
-        Log.d(TAG, c.getTitle() + " was clicked");
+        Crime crime = ((CrimeAdapter)getListAdapter()).getItem(position);
+
+        Intent intent = new Intent(getActivity(), CrimeActivity.class);
+        intent.putExtra(CrimeFragment.EXTRA_CRIME_ID, crime.getId());
+        startActivity(intent);
     }
 
     private class CrimeAdapter extends ArrayAdapter<Crime> {
@@ -61,5 +65,11 @@ public class CrimeListFragment extends ListFragment {
 
             return convertView;
         }
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        ((CrimeAdapter) getListAdapter()).notifyDataSetChanged();
     }
 }
