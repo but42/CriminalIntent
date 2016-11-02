@@ -1,5 +1,6 @@
 package com.but42.criminalintent;
 
+import android.annotation.TargetApi;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
@@ -23,8 +24,8 @@ import java.util.UUID;
  * Created by mikhail on 17/10/16.
  */
 public class CrimeFragment extends Fragment {
-    public static final String EXTRA_CRIME_ID = "com.but42.criminalintent.crime_id";
-    private static final String DIALOG_DATE = "date";
+    public static final String ARG_CRIME_ID = "crime_id";
+    private static final String DIALOG_DATE = "DialogDate";
     private static final int REQUEST_DATE = 0;
     private Crime mCrime;
     private EditText mTitleField;
@@ -34,7 +35,7 @@ public class CrimeFragment extends Fragment {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        UUID crimeId = (UUID) getArguments().getSerializable(EXTRA_CRIME_ID);
+        UUID crimeId = (UUID) getArguments().getSerializable(ARG_CRIME_ID);
         mCrime = CrimeLab.get(getActivity()).getCrime(crimeId);
     }
 
@@ -67,10 +68,10 @@ public class CrimeFragment extends Fragment {
         mDateButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                FragmentManager fm = getActivity().getSupportFragmentManager();
+                FragmentManager manager = getFragmentManager();
                 DatePickerFragment dialog = DatePickerFragment.newInstance(mCrime.getDate());
                 dialog.setTargetFragment(CrimeFragment.this, REQUEST_DATE);
-                dialog.show(fm, DIALOG_DATE);
+                dialog.show(manager, DIALOG_DATE);
             }
         });
 
@@ -88,7 +89,7 @@ public class CrimeFragment extends Fragment {
 
     public static CrimeFragment newInstance(UUID crimeId) {
         Bundle args = new Bundle();
-        args.putSerializable(EXTRA_CRIME_ID, crimeId);
+        args.putSerializable(ARG_CRIME_ID, crimeId);
         CrimeFragment fragment = new CrimeFragment();
         fragment.setArguments(args);
         return fragment;

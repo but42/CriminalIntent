@@ -3,13 +3,14 @@ package com.but42.criminalintent;
 import android.content.Context;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.UUID;
 
 /**
  * Created by mikhail on 17/10/16.
  */
 public class CrimeLab {
-    private ArrayList<Crime> mCrimes;
+    private List<Crime> mCrimes;
 
     private static CrimeLab sCrimeLab;
     private Context mAppContext;
@@ -24,9 +25,15 @@ public class CrimeLab {
     private CrimeLab(Context appContext) {
         this.mAppContext = appContext;
         mCrimes = new ArrayList<>();
+        for (int i = 0; i < 100; i++) {
+            Crime crime = new Crime();
+            crime.setTitle("Crime #" + i);
+            crime.setSolved(i % 2 == 0);
+            mCrimes.add(crime);
+        }
     }
 
-    public ArrayList<Crime> getCrimes() {
+    public List<Crime> getCrimes() {
         return mCrimes;
     }
 
