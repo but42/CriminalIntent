@@ -7,6 +7,7 @@ import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.format.DateFormat;
 import android.view.*;
 import android.widget.Button;
 import android.widget.CheckBox;
@@ -157,7 +158,7 @@ public class CrimeListFragment extends Fragment {
         public void bindCrime(Crime crime) {
             mCrime = crime;
             mTittleTextView.setText(mCrime.getTitle());
-            mDateTextView.setText(mCrime.getDate().toString());
+            mDateTextView.setText(DateFormat.format("dd.MM.yyyy hh:mm aa", mCrime.getDate()));
             mSolvedCheckBox.setChecked(mCrime.isSolved());
         }
 

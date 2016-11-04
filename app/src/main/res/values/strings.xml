@@ -16,4 +16,5 @@
     <string name="delete_crime">Delete Crime</string>
     <string name="empty_list">List is empty</string>
     <string name="empty_list_button">Add new crime</string>
+    <string name="time_picker_title">Time of crime:</string>
 </resources>
