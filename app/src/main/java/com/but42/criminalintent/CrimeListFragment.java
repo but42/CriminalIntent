@@ -124,7 +124,6 @@ public class CrimeListFragment extends Fragment {
         } else {
             visibility = View.GONE;
         }
-
         mEmptyButton.setVisibility(visibility);
         mEmptyTextView.setVisibility(visibility);
 
