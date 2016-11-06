@@ -1,0 +1,33 @@
+<resources>
+    <string name="app_name">Преступный умысел</string>
+    <string name="crime_title_hint">Введите состав преступления</string>
+    <string name="crime_title_label">Название</string>
+    <string name="crime_details_label">Детали</string>
+    <string name="crime_solved_label">Решено?</string>
+    <string name="crimes_title">Преступления</string>
+    <string name="date_picker_title">Дата преступления:</string>
+    <string name="new_crime">Новое преступление</string>
+    <string name="show_subtitle">Показать подзаголовок</string>
+    <string name="hide_subtitle">Скрыть подзагаловок</string>
+    <plurals name="subtitle_plural">
+        <item quantity="one">%1$s преступление</item>
+        <item quantity="other">%1$s преступления</item>
+        <item quantity="few">Несколько преступлений</item>
+        <item quantity="many">Много преступлений</item>
+    </plurals>
+    <string name="delete_crime">Удалить преступление</string>
+    <string name="empty_list">Список пуст</string>
+    <string name="empty_list_button">Добавить преступление</string>
+    <string name="time_picker_title">Время преступления:</string>
+    <string name="crime_suspect_text">Выберете подозреваемого</string>
+    <string name="crime_report_text">Отправить отчет о преступлении</string>
+    <string name="crime_report">%1$s!
+        Преступление было обнаружено %2$s. %3$s, и %4$s
+    </string>
+    <string name="crime_report_solved">Оно уже решено</string>
+    <string name="crime_report_unsolved">Оно еще не решено</string>
+    <string name="crime_report_no_suspect">пока нет подозреваемых.</string>
+    <string name="crime_report_suspect">подозреваемый - %1$s.</string>
+    <string name="crime_report_subject">CriminalIntent Отчет о преступлении</string>
+    <string name="send_report">Отправить отчет через</string>
+</resources>
