@@ -72,10 +72,7 @@ public class Crime {
         return mTitle;
     }
 
-    private class Suspect {
-        private String name;
-        private String id;
-
-
+    public String getPhotoFilename() {
+        return "IMG_" + getId().toString() + ".jpg";
     }
 }
