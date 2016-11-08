@@ -28,13 +28,15 @@ import java.util.UUID;
  * Created by mikhail on 17/10/16.
  */
 public class CrimeFragment extends Fragment {
-    public static final String ARG_CRIME_ID = "crime_id";
+    private static final String ARG_CRIME_ID = "crime_id";
     private static final String DIALOG_DATE = "DialogDate";
     private static final String DIALOG_TIME = "DialogTime";
+    private static final String DIALOG_IMAGE = "DialogImage";
     private static final int REQUEST_DATE = 0;
     private static final int REQUEST_TIME = 1;
     private static final int REQUEST_CONTACT = 2;
     private static final int REQUEST_PHOTO = 3;
+    private static final int REQUEST_LARGE_IMAGE = 4;
     private Crime mCrime;
     private File mPhotoFile;
     private EditText mTitleField;
@@ -186,7 +188,22 @@ public class CrimeFragment extends Fragment {
             }
         });
         mPhotoView = (ImageView) view.findViewById(R.id.crime_photo);
-        updatePhotoView();
+        mPhotoView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                FragmentManager manager = getFragmentManager();
+                LargeImageDialog dialog = LargeImageDialog.newInstance(mPhotoFile);
+                dialog.setTargetFragment(CrimeFragment.this, REQUEST_LARGE_IMAGE);
+                dialog.show(manager, DIALOG_IMAGE);
+            }
+        });
+        ViewTreeObserver observer = mPhotoView.getViewTreeObserver();
+        observer.addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
+            @Override
+            public void onGlobalLayout() {
+                updatePhotoView();
+            }
+        });
 
         return view;
     }
@@ -289,7 +306,7 @@ public class CrimeFragment extends Fragment {
         if (mPhotoFile == null || !mPhotoFile.exists()) {
             mPhotoView.setImageDrawable(null);
         } else {
-            Bitmap bitmap = PictureUtils.getScaledBitmap(mPhotoFile.getPath(), getActivity());
+            Bitmap bitmap = PictureUtils.getScaledBitmap(mPhotoFile.getPath(), mPhotoView.getWidth(), mPhotoView.getHeight());
             mPhotoView.setImageBitmap(bitmap);
         }
     }

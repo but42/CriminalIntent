@@ -11,9 +11,8 @@
     <string name="hide_subtitle">Скрыть подзагаловок</string>
     <plurals name="subtitle_plural">
         <item quantity="one">%1$s преступление</item>
-        <item quantity="other">%1$s преступления</item>
-        <item quantity="few">Несколько преступлений</item>
-        <item quantity="many">Много преступлений</item>
+        <item quantity="few">%1$s преступления</item>
+        <item quantity="many">%1$s преступлений</item>
     </plurals>
     <string name="delete_crime">Удалить преступление</string>
     <string name="empty_list">Список пуст</string>
