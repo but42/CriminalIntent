@@ -16,11 +16,15 @@ import java.util.UUID;
 /**
  * Created by mikhail on 19/10/16.
  */
-public class CrimePagerActivity extends AppCompatActivity {
+public class CrimePagerActivity extends AppCompatActivity implements CrimeFragment.Callbacks {
     private static final String EXTRA_CRIME_ID = "com.but42.criminalintent.crime_id";
     private ViewPager mViewPager;
     private List<Crime> mCrimes;
     private boolean mSubtitleVisible;
+
+    @Override
+    public void onCrimeUpdated(Crime crime) {
+    }
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {

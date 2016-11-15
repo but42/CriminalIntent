@@ -1,5 +1,7 @@
 package com.but42.criminalintent;
 
+import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -26,6 +28,27 @@ public class CrimeListFragment extends Fragment {
     private boolean mSubtitleVisible;
     private Button mEmptyButton;
     private TextView mEmptyTextView;
+    private Callbacks mCallbacks;
+
+    public interface Callbacks {
+        void onCrimeSelected(Crime crime);
+    }
+
+    @Override
+    public void onAttach(Activity activity) {
+        super.onAttach(activity);
+        mCallbacks = (Callbacks) activity;
+    }
+
+    public boolean isSubtitleVisible() {
+        return mSubtitleVisible;
+    }
+
+    @Override
+    public void onDetach() {
+        super.onDetach();
+        mCallbacks = null;
+    }
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -102,12 +125,11 @@ public class CrimeListFragment extends Fragment {
     private void addNewCrime() {
         Crime crime = new Crime();
         CrimeLab.get(getActivity()).addCrime(crime);
-        Intent intent = CrimePagerActivity.newIntent(getActivity(), crime.getId());
-        intent.putExtra(EXTRA_SUBTITLE_VISIBLE, mSubtitleVisible);
-        startActivity(intent);
+        updateUI();
+        mCallbacks.onCrimeSelected(crime);
     }
 
-    private void updateUI() {
+    public void updateUI() {
         CrimeLab crimeLab = CrimeLab.get(getActivity());
         List<Crime> crimes = crimeLab.getCrimes();
         if (mAdapter == null) {
@@ -164,9 +186,8 @@ public class CrimeListFragment extends Fragment {
 
         @Override
         public void onClick(View v) {
-            Intent intent = CrimePagerActivity.newIntent(getActivity(), mCrime.getId());
-            intent.putExtra(EXTRA_SUBTITLE_VISIBLE, mSubtitleVisible);
-            startActivity(intent);
+            //intent.putExtra(EXTRA_SUBTITLE_VISIBLE, mSubtitleVisible);
+            mCallbacks.onCrimeSelected(mCrime);
         }
     }
 

@@ -49,6 +49,28 @@ public class CrimeFragment extends Fragment {
     private ImageButton mCallSuspectButton;
     private ImageButton mPhotoButton;
     private ImageView mPhotoView;
+    private Callbacks mCallbacks;
+
+    public interface Callbacks {
+        void onCrimeUpdated(Crime crime);
+    }
+
+    @Override
+    public void onAttach(Activity activity) {
+        super.onAttach(activity);
+        mCallbacks = (Callbacks) activity;
+    }
+
+    @Override
+    public void onDetach() {
+        super.onDetach();
+        mCallbacks = null;
+    }
+
+    private void updateCrime() {
+        CrimeLab.get(getActivity()).updateCrime(mCrime);
+        mCallbacks.onCrimeUpdated(mCrime);
+    }
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -81,6 +103,7 @@ public class CrimeFragment extends Fragment {
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
                 mCrime.setTitle(s.toString());
+                updateCrime();
             }
 
             @Override
@@ -119,6 +142,7 @@ public class CrimeFragment extends Fragment {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 mCrime.setSolved(isChecked);
+                updateCrime();
             }
         });
 
@@ -240,6 +264,7 @@ public class CrimeFragment extends Fragment {
                     date.get(Calendar.HOUR_OF_DAY), date.get(Calendar.MINUTE));
             mCrime.setDate(date.getTime());
             updateDate();
+            updateCrime();
         }else if (requestCode == REQUEST_TIME) {
             Calendar date = Calendar.getInstance();
             date.setTime(mCrime.getDate());
@@ -249,6 +274,7 @@ public class CrimeFragment extends Fragment {
                     d.get(Calendar.HOUR_OF_DAY), d.get(Calendar.MINUTE));
             mCrime.setDate(date.getTime());
             updateTime();
+            updateCrime();
         } else if (requestCode == REQUEST_CONTACT && data != null) {
             Uri contactUri = data.getData();
             String[] queryFields = new String[] {
@@ -266,11 +292,13 @@ public class CrimeFragment extends Fragment {
                 String number = cursor.getString(indexNumber);
                 mCrime.setSuspectName(suspect);
                 mCrime.setSuspectNumber(number);
+                updateCrime();
                 setSuspectButtons();
             } finally {
                 cursor.close();
             }
         } else if (requestCode == REQUEST_PHOTO) {
+            updateCrime();
             updatePhotoView();
         }
     }
